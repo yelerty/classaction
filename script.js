@@ -7,6 +7,9 @@ const lawsuits = [
         status: "진행중",
         description: "2022년 10월 카카오 데이터센터 화재로 인한 서비스 장애 피해 배상 소송",
         date: "2023.03",
+        victims: "약 5,300만명",
+        compensation: "미정",
+        category: "IT·서비스",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -16,6 +19,9 @@ const lawsuits = [
         status: "모집중",
         description: "머지포인트 서비스 종료에 따른 미환급 포인트 배상 소송",
         date: "2024.01",
+        victims: "약 100만명",
+        compensation: "1인당 최대 50만원",
+        category: "소비자",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -25,6 +31,9 @@ const lawsuits = [
         status: "진행중",
         description: "BMW 차량 화재 사고 관련 결함 인정 및 손해배상 소송",
         date: "2022.08",
+        victims: "약 10만대",
+        compensation: "차량가 일부 환급",
+        category: "자동차",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -34,6 +43,9 @@ const lawsuits = [
         status: "진행중",
         description: "라임펀드 환매 중단 사태 관련 투자자 손해배상 청구 소송",
         date: "2020.07",
+        victims: "약 15,000명",
+        compensation: "약 1조 6,000억원 규모",
+        category: "금융",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -43,6 +55,9 @@ const lawsuits = [
         status: "진행중",
         description: "옵티머스 펀드 사기 사건 관련 투자자 손해배상 소송",
         date: "2020.09",
+        victims: "약 2,000명",
+        compensation: "약 5,000억원 규모",
+        category: "금융",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -52,6 +67,9 @@ const lawsuits = [
         status: "완료",
         description: "가습기살균제로 인한 건강 피해 손해배상 소송 (일부 승소)",
         date: "2016.05",
+        victims: "약 7,000명",
+        compensation: "1인당 최대 2억원",
+        category: "소비자",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -61,6 +79,9 @@ const lawsuits = [
         status: "완료",
         description: "디젤 차량 배출가스 조작 관련 손해배상 소송 (합의)",
         date: "2015.11",
+        victims: "약 12만대",
+        compensation: "1인당 평균 150만원",
+        category: "자동차",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -70,6 +91,9 @@ const lawsuits = [
         status: "모집중",
         description: "과도한 방문판매 계약 및 위약금 관련 소비자 피해 소송",
         date: "2023.11",
+        victims: "미정",
+        compensation: "미정",
+        category: "소비자",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -79,6 +103,9 @@ const lawsuits = [
         status: "진행중",
         description: "분식회계로 인한 주주 손해배상 청구 소송",
         date: "2023.06",
+        victims: "약 3,000명",
+        compensation: "미정",
+        category: "증권",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -88,6 +115,9 @@ const lawsuits = [
         status: "진행중",
         description: "회계처리 부정 관련 주주 손해배상 소송",
         date: "2021.04",
+        victims: "약 40,000명",
+        compensation: "약 8,600억원 규모",
+        category: "증권",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -97,6 +127,9 @@ const lawsuits = [
         status: "모집중",
         description: "항공권 가격 담합 혐의 관련 소비자 손해배상 소송",
         date: "2024.02",
+        victims: "미정",
+        compensation: "미정",
+        category: "소비자",
         link: "https://www.scourt.go.kr/"
     },
     {
@@ -106,6 +139,9 @@ const lawsuits = [
         status: "진행중",
         description: "테라·루나 코인 폭락으로 인한 투자자 손해배상 소송",
         date: "2022.06",
+        victims: "약 28만명",
+        compensation: "약 40조원 규모",
+        category: "가상자산",
         link: "https://www.scourt.go.kr/"
     }
 ];
@@ -115,9 +151,23 @@ let currentSearch = '';
 
 // 페이지 로드시 초기화
 document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
     renderLawsuits(lawsuits);
     setupEventListeners();
 });
+
+// 통계 업데이트
+function updateStats() {
+    const total = lawsuits.length;
+    const active = lawsuits.filter(l => l.status === '진행중').length;
+    const recruiting = lawsuits.filter(l => l.status === '모집중').length;
+    const completed = lawsuits.filter(l => l.status === '완료').length;
+
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('activeCount').textContent = active;
+    document.getElementById('recruitingCount').textContent = recruiting;
+    document.getElementById('completedCount').textContent = completed;
+}
 
 // 이벤트 리스너 설정
 function setupEventListeners() {
@@ -179,11 +229,32 @@ function renderLawsuits(lawsuitsToRender) {
 
     container.innerHTML = lawsuitsToRender.map(lawsuit => `
         <div class="lawsuit-card">
-            <h3>${lawsuit.title}</h3>
-            <span class="lawsuit-status ${lawsuit.status}">${lawsuit.status}</span>
-            <p class="company">대상 기업: ${lawsuit.company}</p>
-            <p>${lawsuit.description}</p>
-            <p class="date">제기일: ${lawsuit.date}</p>
+            <div class="card-header">
+                <h3>${lawsuit.title}</h3>
+                <span class="lawsuit-status ${lawsuit.status}">${lawsuit.status}</span>
+            </div>
+            <div class="card-category">
+                <span class="category-badge">${lawsuit.category}</span>
+            </div>
+            <p class="company">🏢 대상 기업: <strong>${lawsuit.company}</strong></p>
+            <p class="description">${lawsuit.description}</p>
+            <div class="lawsuit-info">
+                <div class="info-item">
+                    <span class="info-icon">👥</span>
+                    <div class="info-content">
+                        <div class="info-label">피해 규모</div>
+                        <div class="info-value">${lawsuit.victims}</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">💰</span>
+                    <div class="info-content">
+                        <div class="info-label">배상금</div>
+                        <div class="info-value">${lawsuit.compensation}</div>
+                    </div>
+                </div>
+            </div>
+            <p class="date">📅 제기일: ${lawsuit.date}</p>
             <a href="${lawsuit.link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
                 자세히 보기 →
             </a>
