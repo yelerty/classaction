@@ -130,6 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateStats();
     renderLawsuits(lawsuits);
     setupEventListeners();
+    updateCurrentDate();
+    fetchVisitorLocation();
 });
 
 // 통계 업데이트
@@ -251,3 +253,74 @@ window.addEventListener('scroll', function() {
         }
     });
 });
+
+// 현재 날짜 업데이트
+function updateCurrentDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+
+    // 현재 연도 업데이트
+    const yearElement = document.getElementById('currentYear');
+    if (yearElement) {
+        yearElement.textContent = year;
+    }
+
+    // 최종 업데이트 날짜 업데이트
+    const updateElement = document.getElementById('lastUpdate');
+    if (updateElement) {
+        updateElement.textContent = `${year}년 ${month}월`;
+    }
+}
+
+// 방문자 위치 정보 가져오기
+async function fetchVisitorLocation() {
+    const locationElement = document.getElementById('locationInfo');
+
+    try {
+        // ipapi.co API 사용 (무료, 하루 1000 요청)
+        const response = await fetch('https://ipapi.co/json/');
+
+        if (!response.ok) {
+            throw new Error('위치 정보를 가져올 수 없습니다');
+        }
+
+        const data = await response.json();
+
+        // 국가명, 지역(도/주), 도시 정보 표시
+        const country = data.country_name || '알 수 없음';
+        const region = data.region || '';
+        const city = data.city || '';
+
+        // 한국어로 된 국가명 매핑
+        const countryKorean = {
+            'South Korea': '대한민국',
+            'Korea, Republic of': '대한민국',
+            'United States': '미국',
+            'Japan': '일본',
+            'China': '중국',
+            'United Kingdom': '영국',
+            'Canada': '캐나다',
+            'Australia': '호주',
+            'Germany': '독일',
+            'France': '프랑스'
+        };
+
+        const displayCountry = countryKorean[country] || country;
+
+        // 위치 정보 텍스트 생성
+        let locationText = `📍 접속 위치: ${displayCountry}`;
+        if (region) {
+            locationText += `, ${region}`;
+        }
+        if (city && city !== region) {
+            locationText += ` (${city})`;
+        }
+
+        locationElement.textContent = locationText;
+
+    } catch (error) {
+        console.error('위치 정보 조회 실패:', error);
+        locationElement.textContent = '📍 위치 정보를 불러올 수 없습니다';
+    }
+}
