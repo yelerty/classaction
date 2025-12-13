@@ -168,6 +168,12 @@ function setupEventListeners() {
             filterLawsuits();
         });
     });
+
+    // 이메일 구독 폼
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    }
 }
 
 // 소송 목록 필터링
@@ -323,4 +329,64 @@ async function fetchVisitorLocation() {
         console.error('위치 정보 조회 실패:', error);
         locationElement.textContent = '📍 위치 정보를 불러올 수 없습니다';
     }
+}
+
+// 이메일 구독 처리
+async function handleNewsletterSubmit(e) {
+    e.preventDefault();
+
+    const emailInput = document.getElementById('emailInput');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const messageElement = document.getElementById('subscribeMessage');
+    const email = emailInput.value.trim();
+
+    // 이메일 유효성 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage('올바른 이메일 주소를 입력해주세요.', 'error');
+        return;
+    }
+
+    // 버튼 비활성화
+    subscribeBtn.disabled = true;
+    subscribeBtn.textContent = '처리중...';
+
+    try {
+        // Vercel Serverless Function 호출
+        const response = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showMessage('✅ 구독이 완료되었습니다! 새로운 집단소송 정보를 이메일로 받아보실 수 있습니다.', 'success');
+            emailInput.value = '';
+        } else {
+            showMessage(data.message || '구독 처리 중 오류가 발생했습니다.', 'error');
+        }
+    } catch (error) {
+        console.error('구독 오류:', error);
+        showMessage('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.', 'error');
+    } finally {
+        // 버튼 활성화
+        subscribeBtn.disabled = false;
+        subscribeBtn.textContent = '구독하기';
+    }
+}
+
+// 메시지 표시
+function showMessage(message, type) {
+    const messageElement = document.getElementById('subscribeMessage');
+    messageElement.textContent = message;
+    messageElement.className = `subscribe-message show ${type}`;
+
+    // 5초 후 메시지 숨김
+    setTimeout(() => {
+        messageElement.className = 'subscribe-message';
+    }, 5000);
 }
