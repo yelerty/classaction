@@ -1,7 +1,7 @@
 // Vercel Serverless Function - 이메일 구독 처리
 // 이 함수는 /api/subscribe 엔드포인트로 호출됩니다
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // CORS 헤더 설정
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
