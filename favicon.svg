@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="scaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 저울대 -->
+  <line x1="50" y1="30" x2="50" y2="70" stroke="url(#scaleGradient)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 가로 막대 -->
+  <line x1="20" y1="35" x2="80" y2="35" stroke="url(#scaleGradient)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 왼쪽 접시 -->
+  <path d="M 15 35 Q 15 40, 20 42 L 30 42 Q 35 40, 35 35" fill="none" stroke="url(#scaleGradient)" stroke-width="3"/>
+  <line x1="20" y1="35" x2="20" y2="42" stroke="url(#scaleGradient)" stroke-width="2"/>
+  <line x1="30" y1="35" x2="30" y2="42" stroke="url(#scaleGradient)" stroke-width="2"/>
+
+  <!-- 오른쪽 접시 -->
+  <path d="M 65 35 Q 65 40, 70 42 L 80 42 Q 85 40, 85 35" fill="none" stroke="url(#scaleGradient)" stroke-width="3"/>
+  <line x1="70" y1="35" x2="70" y2="42" stroke="url(#scaleGradient)" stroke-width="2"/>
+  <line x1="80" y1="35" x2="80" y2="42" stroke="url(#scaleGradient)" stroke-width="2"/>
+
+  <!-- 받침대 -->
+  <rect x="40" y="70" width="20" height="8" rx="2" fill="url(#scaleGradient)"/>
+  <rect x="30" y="78" width="40" height="6" rx="3" fill="url(#scaleGradient)"/>
+</svg>
