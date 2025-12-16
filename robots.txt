@@ -1,9 +1,32 @@
-# robots.txt for zipdansosong.com
+# robots.txt for 집단소송 정보센터 (zipdansosong.com)
+# 모든 검색 엔진 크롤러 허용
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# 크롤링 제외 경로
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+
+# Sitemap 위치
 Sitemap: https://zipdansosong.com/sitemap.xml
 
-# Crawl-delay for polite crawling
+# 주요 검색 엔진 봇 최적화
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: DaumBot
+Allow: /
+
+# 크롤 속도 조절 (초당 요청 수)
 Crawl-delay: 1

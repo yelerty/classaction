@@ -1,9 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://zipdansosong.com/</loc>
-    <lastmod>2024-12-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <!-- 메인 페이지 - 가장 높은 우선순위 -->
+    <url>
+        <loc>https://zipdansosong.com/</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 주요 진행중/모집중 집단소송 -->
+    <!-- 쿠팡 개인정보 유출 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-1</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 티몬위메프 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-2</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- BMW 화재 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-3</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 라임펀드 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-4</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 옵티머스 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-5</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 가습기살균제 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-6</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 테라루나 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-7</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 카카오 먹통 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-8</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- 폭스바겐 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-9</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- 삼성바이오 -->
+    <url>
+        <loc>https://zipdansosong.com/#lawsuit-10</loc>
+        <lastmod>2024-12-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>
