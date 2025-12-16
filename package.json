@@ -1,0 +1,20 @@
+{
+  "name": "classaction-website",
+  "version": "1.0.0",
+  "description": "집단소송 정보센터 웹사이트",
+  "private": true,
+  "scripts": {
+    "generate-og": "node generate-og-image.js",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "class-action",
+    "lawsuit",
+    "korea"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "puppeteer": "^21.11.0"
+  }
+}
