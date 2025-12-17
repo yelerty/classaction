@@ -228,8 +228,12 @@ function renderLawsuits(lawsuitsToRender) {
         return;
     }
 
-    container.innerHTML = lawsuitsToRender.map(lawsuit => `
-        <div class="lawsuit-card">
+    container.innerHTML = lawsuitsToRender.map((lawsuit, index) => {
+        const isCompleted = lawsuit.status === '완료';
+        const cardId = `lawsuit-card-${index}`;
+
+        return `
+        <div class="lawsuit-card ${isCompleted ? 'completed-card collapsed' : ''}" id="${cardId}">
             <div class="card-header">
                 <h3>${lawsuit.title}</h3>
                 <span class="lawsuit-status ${lawsuit.status}">${lawsuit.status}</span>
@@ -237,30 +241,42 @@ function renderLawsuits(lawsuitsToRender) {
             <div class="card-category">
                 <span class="category-badge">${lawsuit.category}</span>
             </div>
-            <p class="company">🏢 대상 기업: <strong>${lawsuit.company}</strong></p>
-            <p class="description">${lawsuit.description}</p>
-            <div class="lawsuit-info">
-                <div class="info-item">
-                    <span class="info-icon">👥</span>
-                    <div class="info-content">
-                        <div class="info-label">피해 규모</div>
-                        <div class="info-value">${lawsuit.victims}</div>
+            <div class="card-details ${isCompleted ? 'collapsible-content' : ''}">
+                <p class="company">🏢 대상 기업: <strong>${lawsuit.company}</strong></p>
+                <p class="description">${lawsuit.description}</p>
+                <div class="lawsuit-info">
+                    <div class="info-item">
+                        <span class="info-icon">👥</span>
+                        <div class="info-content">
+                            <div class="info-label">피해 규모</div>
+                            <div class="info-value">${lawsuit.victims}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">💰</span>
+                        <div class="info-content">
+                            <div class="info-label">배상금</div>
+                            <div class="info-value">${lawsuit.compensation}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-icon">💰</span>
-                    <div class="info-content">
-                        <div class="info-label">배상금</div>
-                        <div class="info-value">${lawsuit.compensation}</div>
-                    </div>
-                </div>
+                <p class="date">📅 제기일: ${lawsuit.date}</p>
+                <a href="${lawsuit.link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
+                    자세히 보기 →
+                </a>
             </div>
-            <p class="date">📅 제기일: ${lawsuit.date}</p>
-            <a href="${lawsuit.link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
-                자세히 보기 →
-            </a>
+            ${isCompleted ? `
+                <button class="toggle-details-btn" onclick="toggleCardDetails('${cardId}')">
+                    <span class="toggle-text">더보기</span>
+                    <span class="toggle-icon">▼</span>
+                </button>
+            ` : ''}
         </div>
-    `).join('');
+        `;
+    }).join('');
+
+    // 완료된 카드에 이벤트 리스너 추가
+    attachToggleListeners();
 }
 
 // 스크롤 애니메이션 (선택사항)
@@ -425,3 +441,37 @@ function showLoadingState() {
 function hideLoadingState() {
     // renderLawsuits()가 자동으로 로딩 상태를 대체함
 }
+
+// 완료된 소송 카드 펼치기/접기
+function toggleCardDetails(cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const isCollapsed = card.classList.contains('collapsed');
+    const toggleBtn = card.querySelector('.toggle-details-btn');
+    const toggleText = toggleBtn.querySelector('.toggle-text');
+    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+
+    if (isCollapsed) {
+        // 펼치기
+        card.classList.remove('collapsed');
+        card.classList.add('expanded');
+        toggleText.textContent = '접기';
+        toggleIcon.textContent = '▲';
+    } else {
+        // 접기
+        card.classList.remove('expanded');
+        card.classList.add('collapsed');
+        toggleText.textContent = '더보기';
+        toggleIcon.textContent = '▼';
+    }
+}
+
+// 이벤트 리스너 연결
+function attachToggleListeners() {
+    // 이미 onclick으로 처리되므로 추가 작업 불필요
+    // 필요시 여기에 추가 이벤트 리스너 등록 가능
+}
+
+// 전역 함수로 등록 (onclick에서 사용)
+window.toggleCardDetails = toggleCardDetails;

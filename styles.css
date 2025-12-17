@@ -746,3 +746,106 @@ footer p {
     color: #666;
     margin-top: 15px;
 }
+
+/* 완료된 소송 축약/확장 기능 */
+.completed-card.collapsed .collapsible-content {
+    display: none;
+}
+
+.completed-card.expanded .collapsible-content {
+    display: block;
+}
+
+.toggle-details-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.toggle-details-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.toggle-details-btn:active {
+    transform: translateY(0);
+}
+
+.toggle-icon {
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+/* 완료된 카드 스타일 조정 */
+.completed-card {
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.completed-card:hover {
+    opacity: 1;
+}
+
+.completed-card.collapsed {
+    min-height: auto;
+}
+
+.completed-card.expanded {
+    min-height: auto;
+}
+
+/* 모바일에서 완료된 카드는 항상 축약 */
+@media (max-width: 768px) {
+    .completed-card.collapsed .collapsible-content {
+        display: none;
+        animation: slideUp 0.3s ease;
+    }
+
+    .completed-card.expanded .collapsible-content {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    .toggle-details-btn {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+}
+
+/* 애니메이션 */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+        overflow: visible;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        max-height: 1000px;
+    }
+    to {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+    }
+}
