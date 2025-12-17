@@ -3,7 +3,7 @@ const SHEETS_CONFIG = {
     // Google Sheets ID (스프레드시트 URL의 /d/ 와 /edit 사이 부분)
     // 예: https://docs.google.com/spreadsheets/d/1ABC-DEF_GHI/edit
     //                                              ↑ 이 부분
-    SHEET_ID: 'YOUR_GOOGLE_SHEET_ID_HERE',
+    SHEET_ID: '1zIUk7qbaTEzMWJPk2sRJ8o7sZ67Qv-kKNJuQ2BstKus',
 
     // API 키 (선택사항 - 공개 시트는 API 키 없이도 가능)
     // Google Cloud Console에서 발급: https://console.cloud.google.com/
