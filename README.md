@@ -58,7 +58,63 @@ vercel --prod
 
 ## 소송 데이터 업데이트
 
-`script.js` 파일의 `lawsuits` 배열을 수정하여 소송 정보를 추가/수정할 수 있습니다.
+### 방법 1: Google Sheets 연동 (추천) 🌟
+
+**코딩 없이 Google Sheets에서 데이터를 관리할 수 있습니다!**
+
+#### 설정 방법 (5분 소요)
+
+1. **Google Sheets 생성**
+   - [Google Sheets](https://sheets.google.com) 접속
+   - 새 스프레드시트 만들기
+   - 시트 이름을 정확히 **"lawsuits"**로 변경
+
+2. **컬럼 구조 설정**
+
+   첫 번째 행에 다음 컬럼 입력:
+   ```
+   id | title | company | status | description | date | victims | compensation | category | link
+   ```
+
+3. **시트 공개 설정**
+   - 우측 상단 "공유" 버튼 클릭
+   - "일반 액세스" → "링크가 있는 모든 사용자" 선택
+   - 권한: "뷰어"로 설정
+
+4. **Sheet ID 복사**
+
+   URL에서 Sheet ID를 복사:
+   ```
+   https://docs.google.com/spreadsheets/d/[SHEET_ID]/edit
+                                            ↑ 여기를 복사
+   ```
+
+5. **config.js 파일 수정**
+   ```javascript
+   const SHEETS_CONFIG = {
+       SHEET_ID: 'YOUR_SHEET_ID_HERE',  // 복사한 Sheet ID 입력
+       // ...
+   };
+   ```
+
+6. **배포**
+   ```bash
+   git add config.js
+   git commit -m "Google Sheets ID 설정"
+   git push
+   ```
+
+**📝 자세한 가이드는 `SHEETS_TEMPLATE.md` 파일을 참고하세요!**
+
+#### 데이터 업데이트
+
+Google Sheets에서 데이터를 수정하면 **자동으로 웹사이트에 반영됩니다!**
+- 캐시 때문에 최대 5분 정도 걸릴 수 있습니다
+- 새로고침하면 즉시 최신 데이터 확인 가능
+
+### 방법 2: 직접 코드 수정
+
+`script.js` 파일의 `getBackupData()` 함수 내 배열을 수정하여 소송 정보를 추가/수정할 수 있습니다.
 
 ### 데이터 출처 (2024년 12월 기준)
 

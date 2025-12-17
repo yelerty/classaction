@@ -1,5 +1,7 @@
-// 집단소송 데이터 (2024년 12월 기준 실제 정보)
-const lawsuits = [
+// 백업 데이터 (Google Sheets 로딩 실패시 사용)
+// Google Sheets가 설정되면 자동으로 Sheets에서 데이터를 가져옵니다
+function getBackupData() {
+    return [
     {
         id: 1,
         title: "쿠팡 개인정보 유출 집단소송",
@@ -120,13 +122,28 @@ const lawsuits = [
         category: "증권",
         link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp"
     }
-];
+    ];
+}
 
+// 현재 사용중인 소송 데이터
+let lawsuits = getBackupData();
 let currentFilter = 'all';
 let currentSearch = '';
 
 // 페이지 로드시 초기화
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Google Sheets에서 데이터 로드 시도
+    try {
+        if (typeof loadLawsuitsFromSheets === 'function') {
+            showLoadingState();
+            lawsuits = await loadLawsuitsFromSheets();
+            hideLoadingState();
+        }
+    } catch (error) {
+        console.error('데이터 로딩 오류:', error);
+        hideLoadingState();
+    }
+
     updateStats();
     renderLawsuits(lawsuits);
     setupEventListeners();
@@ -389,4 +406,22 @@ function showMessage(message, type) {
     setTimeout(() => {
         messageElement.className = 'subscribe-message';
     }, 5000);
+}
+
+// 로딩 상태 표시
+function showLoadingState() {
+    const container = document.getElementById('lawsuitsList');
+    if (container) {
+        container.innerHTML = `
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>집단소송 데이터를 불러오는 중...</p>
+            </div>
+        `;
+    }
+}
+
+// 로딩 상태 숨김
+function hideLoadingState() {
+    // renderLawsuits()가 자동으로 로딩 상태를 대체함
 }
