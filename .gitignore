@@ -1,3 +1,5 @@
 node_modules/
 .DS_Store
 webicon.png
+test-*.html
+test-*.js
