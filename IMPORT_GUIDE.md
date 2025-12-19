@@ -75,7 +75,7 @@ CSV 임포트 대신 직접 입력하려면:
 
 ### 컬럼 구조 (첫 번째 행)
 ```
-id | title | company | status | description | date | victims | compensation | category | link
+id | title | company | status | description | date | victims | compensation | category | link | lawFirms
 ```
 
 ### 필드 설명
@@ -89,7 +89,8 @@ id | title | company | status | description | date | victims | compensation | ca
 - **victims**: 피해자 규모 (예: 약 3,370만명)
 - **compensation**: 배상금 정보 (예: 1인당 약 10만원 예상)
 - **category**: "소비자", "자동차", "금융", "가상자산", "IT·서비스", "증권" 등
-- **link**: 참고 링크 URL
+- **link**: 참고 링크 URL (단일 링크, lawFirms가 없을 때 사용)
+- **lawFirms**: 로펌 목록 (JSON 형식, 선택사항)
 
 ---
 
@@ -160,6 +161,40 @@ id | title | company | status | description | date | victims | compensation | ca
 - `가상자산` - 암호화폐, 코인
 - `IT·서비스` - IT 서비스 장애
 - `증권` - 주식, 증권 관련
+
+### lawFirms (로펌 목록) - 선택사항
+
+같은 사건에 대해 여러 로펌이 개별적으로 집단소송을 진행하는 경우 사용합니다.
+
+#### 형식: JSON 배열
+```json
+[{"name":"법무법인 대륜","link":"https://www.daeryunlaw.com/notice/5915"},{"name":"법무법인 한결","link":"https://www.scourt.go.kr/"}]
+```
+
+#### 예시 (Google Sheets 셀에 입력)
+
+**단일 로펌 (2개):**
+```
+[{"name":"법무법인 광장","link":"https://example.com/1"},{"name":"법무법인 율촌","link":"https://example.com/2"}]
+```
+
+**여러 로펌 (3개):**
+```
+[{"name":"법무법인 한누리","link":"https://example.com/1"},{"name":"법무법인 바른","link":"https://example.com/2"},{"name":"법무법인 민후","link":"https://example.com/3"}]
+```
+
+#### 주의사항
+- ✅ **lawFirms가 있으면**: 여러 로펌 버튼이 표시됩니다
+- ✅ **lawFirms가 비어있으면**: link 필드의 URL이 사용됩니다
+- ⚠️ **JSON 형식을 정확히 지켜야 합니다** (따옴표, 콤마, 대괄호)
+- ⚠️ 로펌이 1개만 있어도 배열 형식으로 입력해야 합니다
+
+#### 빈 값 처리
+lawFirms 필드를 사용하지 않으려면:
+- 셀을 비워두거나
+- 빈 배열 `[]`을 입력하세요
+
+이 경우 기존 link 필드가 사용됩니다.
 
 ---
 

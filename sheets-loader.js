@@ -97,6 +97,16 @@ class SheetsLoader {
                 continue;
             }
 
+            // lawFirms 데이터 파싱 (JSON 문자열 또는 빈 값)
+            let lawFirms = null;
+            if (row[10]) {
+                try {
+                    lawFirms = JSON.parse(row[10]);
+                } catch (error) {
+                    console.warn(`행 ${i}: lawFirms JSON 파싱 실패`, error);
+                }
+            }
+
             const lawsuit = {
                 id: parseInt(row[0]) || i,
                 title: row[1] || '',
@@ -109,6 +119,11 @@ class SheetsLoader {
                 category: row[8] || '기타',
                 link: row[9] || '#'
             };
+
+            // lawFirms가 있으면 추가, 없으면 link 사용
+            if (lawFirms && Array.isArray(lawFirms) && lawFirms.length > 0) {
+                lawsuit.lawFirms = lawFirms;
+            }
 
             data.push(lawsuit);
         }

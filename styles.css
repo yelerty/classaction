@@ -849,3 +849,160 @@ footer p {
         overflow: hidden;
     }
 }
+
+/* 로펌별 링크 섹션 */
+.law-firms-section {
+    margin: 20px 25px 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+    border-radius: 12px;
+    border: 2px solid #e8eaf6;
+    transition: all 0.3s;
+}
+
+.law-firms-section.recruiting {
+    background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+    border: 2px solid #ffc107;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.15);
+}
+
+.law-firms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e8eaf6;
+}
+
+.law-firms-section.recruiting .law-firms-header {
+    border-bottom-color: #ffe4a3;
+}
+
+.firms-label {
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.law-firms-section.recruiting .firms-label {
+    color: #f57c00;
+}
+
+.firms-count {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 700;
+}
+
+.law-firms-section.recruiting .firms-count {
+    background: #f57c00;
+    animation: pulse 2s infinite;
+}
+
+.law-firms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.law-firm-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s;
+    gap: 12px;
+}
+
+.law-firm-link:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.law-firms-section.recruiting .law-firm-link {
+    border-color: #ffc107;
+}
+
+.law-firms-section.recruiting .law-firm-link:hover {
+    background: linear-gradient(135deg, #ffc107 0%, #f57c00 100%);
+    border-color: #f57c00;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.firm-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.firm-name {
+    flex: 1;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.firm-arrow {
+    font-size: 1.2em;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+
+.law-firm-link:hover .firm-arrow {
+    transform: translateX(5px);
+}
+
+.no-link {
+    margin: 20px 25px 25px;
+    padding: 14px 20px;
+    background: #f5f5f5;
+    color: #999;
+    text-align: center;
+    border-radius: 10px;
+    font-style: italic;
+}
+
+/* 모바일 반응형 - 로펌 링크 */
+@media (max-width: 768px) {
+    .law-firms-section {
+        margin: 15px 20px 20px;
+        padding: 15px;
+    }
+
+    .law-firms-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .law-firm-link {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
+
+    .firm-icon {
+        font-size: 1.3em;
+    }
+
+    .firm-name {
+        font-size: 0.95em;
+    }
+
+    .firm-arrow {
+        font-size: 1.1em;
+    }
+}

@@ -12,7 +12,11 @@ function getBackupData() {
         victims: "약 3,370만명",
         compensation: "1인당 약 10만원 예상",
         category: "소비자",
-        link: "https://www.daeryunlaw.com/notice/5915"
+        lawFirms: [
+            { name: "법무법인 대륜", link: "https://www.daeryunlaw.com/notice/5915" },
+            { name: "법무법인 한결", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 태평양", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 2,
@@ -24,7 +28,10 @@ function getBackupData() {
         victims: "소상공인 다수",
         compensation: "약 1조 7,000억원 규모",
         category: "소비자",
-        link: "https://www.scourt.go.kr/"
+        lawFirms: [
+            { name: "법무법인 광장", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 율촌", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 3,
@@ -36,7 +43,11 @@ function getBackupData() {
         victims: "약 10만대 이상",
         compensation: "진행중",
         category: "자동차",
-        link: "https://www.scourt.go.kr/"
+        lawFirms: [
+            { name: "법무법인 한누리", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 바른", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 민후", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 4,
@@ -48,7 +59,10 @@ function getBackupData() {
         victims: "투자자 다수",
         compensation: "피해액 1조원 이상",
         category: "금융",
-        link: "https://www.scourt.go.kr/"
+        lawFirms: [
+            { name: "법무법인 김앤장", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 세종", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 5,
@@ -60,7 +74,10 @@ function getBackupData() {
         victims: "투자자 다수",
         compensation: "피해액 5,000억원",
         category: "금융",
-        link: "https://www.scourt.go.kr/"
+        lawFirms: [
+            { name: "법무법인 태평양", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 화우", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 6,
@@ -72,7 +89,10 @@ function getBackupData() {
         victims: "사망자 1,843명, 피해자 6,048명",
         compensation: "국가배상 300~500만원",
         category: "소비자",
-        link: "https://healthrelief.or.kr/"
+        lawFirms: [
+            { name: "가습기살균제 피해구제센터", link: "https://healthrelief.or.kr/" },
+            { name: "법무법인 환경보건시민센터", link: "https://healthrelief.or.kr/" }
+        ]
     },
     {
         id: 7,
@@ -84,7 +104,11 @@ function getBackupData() {
         victims: "약 20만명",
         compensation: "피해액 3,000억원",
         category: "가상자산",
-        link: "https://www.scourt.go.kr/"
+        lawFirms: [
+            { name: "법무법인 린", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 디라이트", link: "https://www.scourt.go.kr/" },
+            { name: "법무법인 법률사랑", link: "https://www.scourt.go.kr/" }
+        ]
     },
     {
         id: 8,
@@ -120,7 +144,10 @@ function getBackupData() {
         victims: "소액주주 다수",
         compensation: "진행중",
         category: "증권",
-        link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp"
+        lawFirms: [
+            { name: "증권소송지원센터", link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp" },
+            { name: "법무법인 광장", link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp" }
+        ]
     }
     ];
 }
@@ -230,7 +257,11 @@ function renderLawsuits(lawsuitsToRender) {
 
     container.innerHTML = lawsuitsToRender.map((lawsuit, index) => {
         const isCompleted = lawsuit.status === '완료';
+        const isRecruiting = lawsuit.status === '모집중';
         const cardId = `lawsuit-card-${index}`;
+
+        // 로펌 링크 HTML 생성
+        const lawFirmLinksHtml = getLawFirmLinksHtml(lawsuit, isRecruiting);
 
         return `
         <div class="lawsuit-card ${isCompleted ? 'completed-card collapsed' : ''}" id="${cardId}">
@@ -261,9 +292,7 @@ function renderLawsuits(lawsuitsToRender) {
                     </div>
                 </div>
                 <p class="date">📅 제기일: ${lawsuit.date}</p>
-                <a href="${lawsuit.link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
-                    자세히 보기 →
-                </a>
+                ${lawFirmLinksHtml}
             </div>
             ${isCompleted ? `
                 <button class="toggle-details-btn" onclick="toggleCardDetails('${cardId}')">
@@ -277,6 +306,54 @@ function renderLawsuits(lawsuitsToRender) {
 
     // 완료된 카드에 이벤트 리스너 추가
     attachToggleListeners();
+}
+
+// 로펌 링크 HTML 생성 함수
+function getLawFirmLinksHtml(lawsuit, isRecruiting) {
+    // lawFirms 배열이 있는 경우
+    if (lawsuit.lawFirms && Array.isArray(lawsuit.lawFirms) && lawsuit.lawFirms.length > 0) {
+        if (lawsuit.lawFirms.length === 1) {
+            // 단일 로펌인 경우 기존 스타일로 표시
+            return `
+                <a href="${lawsuit.lawFirms[0].link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
+                    자세히 보기 →
+                </a>
+            `;
+        } else {
+            // 여러 로펌인 경우 로펌별 버튼 표시
+            const firmButtonsHtml = lawsuit.lawFirms.map(firm => `
+                <a href="${firm.link}" target="_blank" rel="noopener noreferrer" class="law-firm-link">
+                    <span class="firm-icon">⚖️</span>
+                    <span class="firm-name">${firm.name}</span>
+                    <span class="firm-arrow">→</span>
+                </a>
+            `).join('');
+
+            return `
+                <div class="law-firms-section ${isRecruiting ? 'recruiting' : ''}">
+                    <div class="law-firms-header">
+                        <span class="firms-label">참여 가능한 로펌</span>
+                        <span class="firms-count">${lawsuit.lawFirms.length}곳</span>
+                    </div>
+                    <div class="law-firms-list">
+                        ${firmButtonsHtml}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // 기존 link 필드가 있는 경우 (하위 호환성)
+    if (lawsuit.link) {
+        return `
+            <a href="${lawsuit.link}" target="_blank" rel="noopener noreferrer" class="lawsuit-link">
+                자세히 보기 →
+            </a>
+        `;
+    }
+
+    // 링크가 없는 경우
+    return '<p class="no-link">링크 정보가 없습니다</p>';
 }
 
 // 스크롤 애니메이션 (선택사항)
