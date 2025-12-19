@@ -12,8 +12,8 @@ const SHEETS_CONFIG = {
     // Sheet 이름
     SHEET_NAME: 'lawsuits',
 
-    // 데이터 범위 (A1:J100 = A열부터 J열까지, 최대 100행)
-    RANGE: 'A1:J100',
+    // 데이터 범위 (A1:K100 = A열부터 K열까지, 최대 100행)
+    RANGE: 'A1:K100',
 
     // 캐시 시간 (밀리초, 기본 5분)
     CACHE_TIME: 5 * 60 * 1000,
