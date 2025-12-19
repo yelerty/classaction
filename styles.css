@@ -949,10 +949,26 @@ footer p {
     flex-shrink: 0;
 }
 
-.firm-name {
+.firm-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.firm-name {
     font-weight: 700;
     font-size: 1em;
+}
+
+.firm-compensation {
+    font-size: 0.85em;
+    color: #666;
+    font-weight: 500;
+}
+
+.law-firm-link:hover .firm-compensation {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .firm-arrow {

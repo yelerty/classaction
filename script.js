@@ -10,12 +10,11 @@ function getBackupData() {
         description: "2024년 6월부터 약 5개월간 해킹으로 3,370만명의 개인정보가 유출된 사건. 2025년 11월 공식 발표. 국내 최대 규모 개인정보 유출 사고",
         date: "2025.11",
         victims: "약 3,370만명",
-        compensation: "1인당 약 10만원 예상",
+        compensation: "로펌별 상이 (10만원~30만원)",
         category: "소비자",
         lawFirms: [
-            { name: "법무법인 대륜", link: "https://www.daeryunlaw.com/notice/5915" },
-            { name: "법무법인 한결", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 태평양", link: "https://www.scourt.go.kr/" }
+            { name: "법무법인 지향", link: "https://jihyanglaw.com/?p=3643", compensation: "1인당 위자료 30만원 청구" },
+            { name: "법무법인 대륜", link: "https://www.daeryunlaw.com/notice/5915", compensation: "1인당 약 10만원 예상" }
         ]
     },
     {
@@ -28,10 +27,7 @@ function getBackupData() {
         victims: "소상공인 다수",
         compensation: "약 1조 7,000억원 규모",
         category: "소비자",
-        lawFirms: [
-            { name: "법무법인 광장", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 율촌", link: "https://www.scourt.go.kr/" }
-        ]
+        link: "https://www.scourt.go.kr/"
     },
     {
         id: 3,
@@ -43,11 +39,7 @@ function getBackupData() {
         victims: "약 10만대 이상",
         compensation: "진행중",
         category: "자동차",
-        lawFirms: [
-            { name: "법무법인 한누리", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 바른", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 민후", link: "https://www.scourt.go.kr/" }
-        ]
+        link: "https://www.scourt.go.kr/"
     },
     {
         id: 4,
@@ -59,10 +51,7 @@ function getBackupData() {
         victims: "투자자 다수",
         compensation: "피해액 1조원 이상",
         category: "금융",
-        lawFirms: [
-            { name: "법무법인 김앤장", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 세종", link: "https://www.scourt.go.kr/" }
-        ]
+        link: "https://www.scourt.go.kr/"
     },
     {
         id: 5,
@@ -74,10 +63,7 @@ function getBackupData() {
         victims: "투자자 다수",
         compensation: "피해액 5,000억원",
         category: "금융",
-        lawFirms: [
-            { name: "법무법인 태평양", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 화우", link: "https://www.scourt.go.kr/" }
-        ]
+        link: "https://www.scourt.go.kr/"
     },
     {
         id: 6,
@@ -89,10 +75,7 @@ function getBackupData() {
         victims: "사망자 1,843명, 피해자 6,048명",
         compensation: "국가배상 300~500만원",
         category: "소비자",
-        lawFirms: [
-            { name: "가습기살균제 피해구제센터", link: "https://healthrelief.or.kr/" },
-            { name: "법무법인 환경보건시민센터", link: "https://healthrelief.or.kr/" }
-        ]
+        link: "https://healthrelief.or.kr/"
     },
     {
         id: 7,
@@ -104,11 +87,7 @@ function getBackupData() {
         victims: "약 20만명",
         compensation: "피해액 3,000억원",
         category: "가상자산",
-        lawFirms: [
-            { name: "법무법인 린", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 디라이트", link: "https://www.scourt.go.kr/" },
-            { name: "법무법인 법률사랑", link: "https://www.scourt.go.kr/" }
-        ]
+        link: "https://www.scourt.go.kr/"
     },
     {
         id: 8,
@@ -144,10 +123,7 @@ function getBackupData() {
         victims: "소액주주 다수",
         compensation: "진행중",
         category: "증권",
-        lawFirms: [
-            { name: "증권소송지원센터", link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp" },
-            { name: "법무법인 광장", link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp" }
-        ]
+        link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp"
     }
     ];
 }
@@ -324,7 +300,10 @@ function getLawFirmLinksHtml(lawsuit, isRecruiting) {
             const firmButtonsHtml = lawsuit.lawFirms.map(firm => `
                 <a href="${firm.link}" target="_blank" rel="noopener noreferrer" class="law-firm-link">
                     <span class="firm-icon">⚖️</span>
-                    <span class="firm-name">${firm.name}</span>
+                    <div class="firm-info">
+                        <span class="firm-name">${firm.name}</span>
+                        ${firm.compensation ? `<span class="firm-compensation">${firm.compensation}</span>` : ''}
+                    </div>
                     <span class="firm-arrow">→</span>
                 </a>
             `).join('');
