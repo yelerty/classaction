@@ -16,10 +16,7 @@ const SHEETS_CONFIG = {
     RANGE: 'A1:K100',
 
     // 캐시 시간 (밀리초, 기본 5분)
-    CACHE_TIME: 5 * 60 * 1000,
-
-    // 백업 데이터 사용 여부 (Sheets 로딩 실패시)
-    USE_BACKUP: true
+    CACHE_TIME: 5 * 60 * 1000
 };
 
 // 환경 감지

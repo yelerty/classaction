@@ -747,6 +747,56 @@ footer p {
     margin-top: 15px;
 }
 
+/* Error State */
+.error-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: #666;
+    background: #fff;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.error-state h3 {
+    font-size: 1.8em;
+    color: #e74c3c;
+    margin-bottom: 15px;
+}
+
+.error-state p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.reload-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.reload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.reload-btn:active {
+    transform: translateY(0);
+}
+
 /* 완료된 소송 축약/확장 기능 */
 .completed-card.collapsed .collapsible-content {
     display: none;

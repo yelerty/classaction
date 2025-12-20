@@ -32,13 +32,6 @@ class SheetsLoader {
             return data;
         } catch (error) {
             console.error('❌ Google Sheets 로딩 실패:', error);
-
-            // 백업 데이터 사용
-            if (this.config.USE_BACKUP && typeof getBackupData === 'function') {
-                console.log('📋 백업 데이터 사용');
-                return getBackupData();
-            }
-
             throw error;
         }
     }
@@ -132,36 +125,72 @@ class SheetsLoader {
     }
 
     /**
-     * CSV 파싱
+     * CSV 파싱 (RFC 4180 호환)
      */
     parseCSV(csvText) {
-        // CSV를 행으로 분리
-        const lines = csvText.split('\n');
-        const rows = lines.map(line => {
-            // 간단한 CSV 파싱 (따옴표 처리)
-            const result = [];
-            let current = '';
-            let inQuotes = false;
+        const rows = [];
+        let currentRow = [];
+        let currentField = '';
+        let inQuotes = false;
 
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
+        for (let i = 0; i < csvText.length; i++) {
+            const char = csvText[i];
+            const nextChar = csvText[i + 1];
 
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
+            if (inQuotes) {
+                // 따옴표 안에 있을 때
+                if (char === '"' && nextChar === '"') {
+                    // 이중 따옴표 = 이스케이프된 따옴표
+                    currentField += '"';
+                    i++; // 다음 따옴표 건너뛰기
+                } else if (char === '"') {
+                    // 따옴표 종료
+                    inQuotes = false;
                 } else {
-                    current += char;
+                    // 일반 문자 (개행 포함)
+                    currentField += char;
+                }
+            } else {
+                // 따옴표 밖에 있을 때
+                if (char === '"') {
+                    // 따옴표 시작
+                    inQuotes = true;
+                } else if (char === ',') {
+                    // 필드 구분자
+                    currentRow.push(currentField);
+                    currentField = '';
+                } else if (char === '\n') {
+                    // 행 구분자
+                    currentRow.push(currentField);
+                    if (currentRow.some(field => field.trim() !== '')) {
+                        rows.push(currentRow);
+                    }
+                    currentRow = [];
+                    currentField = '';
+                } else if (char === '\r') {
+                    // Windows 스타일 개행(\r\n)의 \r은 무시
+                    if (nextChar !== '\n') {
+                        // Mac 스타일 개행(\r)
+                        currentRow.push(currentField);
+                        if (currentRow.some(field => field.trim() !== '')) {
+                            rows.push(currentRow);
+                        }
+                        currentRow = [];
+                        currentField = '';
+                    }
+                } else {
+                    currentField += char;
                 }
             }
+        }
 
-            if (current) {
-                result.push(current.trim());
+        // 마지막 필드와 행 처리
+        if (currentField || currentRow.length > 0) {
+            currentRow.push(currentField);
+            if (currentRow.some(field => field.trim() !== '')) {
+                rows.push(currentRow);
             }
-
-            return result;
-        });
+        }
 
         return this.parseSheetData(rows);
     }
@@ -197,14 +226,12 @@ let sheetsLoader = null;
 async function loadLawsuitsFromSheets() {
     // config.js가 로드되었는지 확인
     if (typeof SHEETS_CONFIG === 'undefined') {
-        console.error('❌ config.js를 먼저 로드하세요');
-        return getBackupData();
+        throw new Error('config.js를 먼저 로드하세요');
     }
 
     // 설정 검증
     if (!validateConfig()) {
-        console.log('📋 백업 데이터 사용');
-        return getBackupData();
+        throw new Error('Google Sheets 설정이 올바르지 않습니다');
     }
 
     // 로더 인스턴스 생성
@@ -212,12 +239,7 @@ async function loadLawsuitsFromSheets() {
         sheetsLoader = new SheetsLoader(SHEETS_CONFIG);
     }
 
-    try {
-        return await sheetsLoader.loadData();
-    } catch (error) {
-        console.error('데이터 로딩 실패:', error);
-        return getBackupData();
-    }
+    return await sheetsLoader.loadData();
 }
 
 /**

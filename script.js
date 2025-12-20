@@ -1,135 +1,5 @@
-// 백업 데이터 (Google Sheets 로딩 실패시 사용)
-// Google Sheets가 설정되면 자동으로 Sheets에서 데이터를 가져옵니다
-function getBackupData() {
-    return [
-    {
-        id: 1,
-        title: "쿠팡 개인정보 유출 집단소송",
-        company: "쿠팡",
-        status: "모집중",
-        description: "2024년 6월부터 약 5개월간 해킹으로 3,370만명의 개인정보가 유출된 사건. 2025년 11월 공식 발표. 국내 최대 규모 개인정보 유출 사고",
-        date: "2025.11",
-        victims: "약 3,370만명",
-        compensation: "로펌별 상이 (10만원~30만원)",
-        category: "소비자",
-        lawFirms: [
-            { name: "법무법인 지향", link: "https://jihyanglaw.com/?p=3643", compensation: "1인당 위자료 30만원 청구" },
-            { name: "법무법인 대륜", link: "https://www.daeryunlaw.com/notice/5915", compensation: "1인당 약 10만원 예상" }
-        ]
-    },
-    {
-        id: 2,
-        title: "티몬·위메프 정산지연 집단소송",
-        company: "티몬·위메프",
-        status: "진행중",
-        description: "큐텐 계열사의 판매자 정산 지연 및 미지급 사태. 약 1조 7,000억원 규모의 피해",
-        date: "2024.07",
-        victims: "소상공인 다수",
-        compensation: "약 1조 7,000억원 규모",
-        category: "소비자",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 3,
-        title: "BMW 화재 결함 집단소송",
-        company: "BMW 코리아",
-        status: "진행중",
-        description: "2018년부터 발생한 BMW 디젤차량 연쇄 화재 사고. EGR 쿨러 결함이 원인으로 밝혀짐. 한국 최초 소비자 집단소송",
-        date: "2018.08",
-        victims: "약 10만대 이상",
-        compensation: "진행중",
-        category: "자동차",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 4,
-        title: "라임자산운용 펀드 사기 집단소송",
-        company: "라임자산운용",
-        status: "진행중",
-        description: "라임펀드 환매 중단 사태. 2024년 프랑스에서 이인광 에스모 회장 검거. 피해액 1조원 이상",
-        date: "2020.07",
-        victims: "투자자 다수",
-        compensation: "피해액 1조원 이상",
-        category: "금융",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 5,
-        title: "옵티머스 사모펀드 집단소송",
-        company: "옵티머스자산운용",
-        status: "진행중",
-        description: "옵티머스 펀드 돌려막기 사기 사건. 김재현 전 대표 징역 40년 확정. 5,000억원 횡령",
-        date: "2020.09",
-        victims: "투자자 다수",
-        compensation: "피해액 5,000억원",
-        category: "금융",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 6,
-        title: "가습기살균제 피해 집단소송",
-        company: "옥시레킷벤키저·SK케미칼·애경 외",
-        status: "진행중",
-        description: "2024년 2월 국가배상책임 첫 인정. 사망자 1,843명, 인정 피해자 6,048명. 2024년 대법원 재심리 진행 중",
-        date: "2016.05",
-        victims: "사망자 1,843명, 피해자 6,048명",
-        compensation: "국가배상 300~500만원",
-        category: "소비자",
-        link: "https://healthrelief.or.kr/"
-    },
-    {
-        id: 7,
-        title: "테라·루나 코인 투자자 집단소송",
-        company: "테라폼랩스",
-        status: "진행중",
-        description: "2022년 테라·루나 코인 폭락 사태. 권도형 대표 2024년 미국 송환. 한국 피해액 3,000억원",
-        date: "2022.06",
-        victims: "약 20만명",
-        compensation: "피해액 3,000억원",
-        category: "가상자산",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 8,
-        title: "카카오 먹통 사태 소송",
-        company: "카카오",
-        status: "완료",
-        description: "2022년 10월 카카오 데이터센터 화재로 인한 서비스 장애. 2023년 집단소송 1심 기각",
-        date: "2022.10",
-        victims: "전 국민",
-        compensation: "소송 기각",
-        category: "IT·서비스",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 9,
-        title: "폭스바겐 배출가스 조작 집단소송",
-        company: "폭스바겐 코리아",
-        status: "완료",
-        description: "디젤 차량 배출가스 조작 '디젤게이트' 사건. 2020년 합의로 종결",
-        date: "2015.11",
-        victims: "약 12만대",
-        compensation: "1인당 평균 150만원",
-        category: "자동차",
-        link: "https://www.scourt.go.kr/"
-    },
-    {
-        id: 10,
-        title: "삼성바이오로직스 회계 부정 집단소송",
-        company: "삼성바이오로직스",
-        status: "진행중",
-        description: "2015년 회계처리 부정 의혹 관련 주주 손해배상 소송. 장기간 법정 공방 중",
-        date: "2021.04",
-        victims: "소액주주 다수",
-        compensation: "진행중",
-        category: "증권",
-        link: "https://www.scourt.go.kr/portal/notice/securities/securities.jsp"
-    }
-    ];
-}
-
 // 현재 사용중인 소송 데이터
-let lawsuits = getBackupData();
+let lawsuits = [];
 let currentFilter = 'all';
 let currentSearch = '';
 
@@ -141,10 +11,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             showLoadingState();
             lawsuits = await loadLawsuitsFromSheets();
             hideLoadingState();
+
+            if (!lawsuits || lawsuits.length === 0) {
+                showErrorState('데이터를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.');
+            }
+        } else {
+            showErrorState('데이터 로더를 찾을 수 없습니다.');
         }
     } catch (error) {
         console.error('데이터 로딩 오류:', error);
         hideLoadingState();
+        showErrorState('데이터 로딩 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     }
 
     updateStats();
@@ -496,6 +373,21 @@ function showLoadingState() {
 // 로딩 상태 숨김
 function hideLoadingState() {
     // renderLawsuits()가 자동으로 로딩 상태를 대체함
+}
+
+// 에러 상태 표시
+function showErrorState(message) {
+    const container = document.getElementById('lawsuitsList');
+    if (container) {
+        container.innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">⚠️</div>
+                <h3>데이터 로딩 실패</h3>
+                <p>${message}</p>
+                <button onclick="location.reload()" class="reload-btn">새로고침</button>
+            </div>
+        `;
+    }
 }
 
 // 완료된 소송 카드 펼치기/접기
