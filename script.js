@@ -113,8 +113,8 @@ function renderLawsuits(lawsuitsToRender) {
         const isRecruiting = lawsuit.status === '모집중';
         const cardId = `lawsuit-card-${index}`;
 
-        // 로펌 링크 HTML 생성
-        const lawFirmLinksHtml = getLawFirmLinksHtml(lawsuit, isRecruiting);
+        // 로펌 링크 HTML 생성 (완료된 소송은 제외)
+        const lawFirmLinksHtml = isCompleted ? '' : getLawFirmLinksHtml(lawsuit, isRecruiting);
 
         return `
         <div class="lawsuit-card ${isCompleted ? 'completed-card collapsed' : ''}" id="${cardId}">
